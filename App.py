@@ -5,6 +5,16 @@ from flask_json_schema import JsonSchema, JsonValidationError
 import sqlite3
 import logging
 
+from Entidades.Aluno import Aluno
+from Entidades.Campus import Campus
+from Entidades.Curso import Curso
+from Entidades.Disciplina import Disciplina
+from Entidades.Endereco import Endereco
+from Entidades.Escola import Escola
+from Entidades.Professor import Professor
+from Entidades.Turma import Turma
+from Entidades.Turno import Turno
+
 
 # Inicializando a aplicação.
 app = Flask(__name__)
@@ -22,18 +32,93 @@ logger.setLevel(logging.INFO)
 schema = JsonSchema()
 schema.init_app(app)
 
+
+
 aluno_schema = {
-    'required': ['nome', 'nascimento', 'matricula', 'cpf'],
+    'required': ['nome', 'nascimento', 'matricula', 'cpf', 'id_endereco', 'id_curso'],
     'properties': {
         'nome': {'type': 'string'},
-        'endereco': {'type': 'string'},
+        'matricula': {'type': 'string'},
+        'cpf': {'type': 'string'},
         'nascimento': {'type': 'string'},
-        'matricula': {'type': 'string'}
+        'id_endereco': {'type': 'string'},
+        'id_curso': {'type': 'string'},
     }
 }
 
+
+campus_schema = {
+    'required': ['sigla','cidade'],
+    'properties': {
+        'sigla': {'type': 'string'},
+        'cidade': {'type': 'string'}
+    }
+}
+
+curso_schema = {
+    'required': ['nome','id_turno'],
+    'properties': {
+        'nome': {'type': 'string'},
+        'id_turno': {'type': 'string'}
+    }
+}
+
+disciplina_schema = {
+    'required': ['nome', 'id_professor'],
+    'properties': {
+        'nome': {'type': 'string'},
+        'id_professor': {'type': 'string'}
+    }
+}
+
+endereco_schema = {
+    'required': ['logradouro','complemento','bairro', 'cep', 'numero'],
+    'properties': {
+        'logradouro': {'type': 'string'},
+        'complemento': {'type': 'string'},
+        'bairro': {'type': 'string'},
+        'cep': {'type': 'string'},
+        'numero': {'type': 'string'},
+    }
+}
+
+escola_schema = {
+    'required': ['nome', 'id_endereco', 'id_campus'],
+    'properties': {
+        'nome': { 'type': 'string'},
+        'id_endereco': { 'type': 'string'},
+        'id_campus': { 'type': 'string'}
+    }
+}
+
+professor_schema = {
+    'required': ['nome', 'id_endereco'],
+    'properties': {
+        'nome': { 'type': 'string'},
+        'id_endereco': { 'type': 'string'}
+
+    }
+}
+turma_schema = {
+    'required': [ 'nome', 'id_curso'],
+    'properties': {
+        'nome': {'type': 'string'},
+        'id_curso': {'type': 'string'}
+    }
+}
+
+turno_schema = {
+    'required': [ 'nome', 'id_professor'],
+    'properties': {
+        'nome': {'type': 'string'},
+        'id_professor': {'type': 'string'}
+    }
+}
+
+
+
 # Banco de dados.
-DATABASE_NAME = 'escola_2.db'
+DATABASE_NAME = 'EscolaApp_versao2.db'
 
 @app.route("/alunos")
 def getAlunos():
@@ -53,7 +138,7 @@ def getAlunos():
             aluno = {
                 "id_aluno":linha[0],
                 "nome":linha[1],
-                "endereco":linha[2],
+                "cpf":linha[2],
                 "nascimento":linha[3],
                 "matricula":linha[4]
             }
@@ -83,7 +168,7 @@ def getAluno(id):
     aluno = {
         "id_aluno":linha[0],
         "nome":linha[1],
-        "endereco":linha[2],
+        "cpf":linha[2],
         "nascimento":linha[3],
         "matricula":linha[4],
     }
@@ -99,7 +184,7 @@ def setAluno():
     # Recuperando dados do JSON.
     alunoJson = request.get_json()
     nome = alunoJson['nome']
-    endereco = alunoJson['endereco']
+    cpf = alunoJson['cpf']
     nascimento = alunoJson['nascimento']
     matricula = alunoJson['matricula']
     aluno = Aluno(nome, endereco, nascimento, matricula)
