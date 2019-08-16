@@ -402,7 +402,7 @@ def getEnderecoId(id):
     except(sqlite3.Error):
         logger.error("Aconteceu um erro.")
     logger.info("Endereço listado com sucesso.")
-        return jsonify(endereco)
+    return jsonify(endereco)
 
 
 # cadastrar endereço
