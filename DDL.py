@@ -6,11 +6,13 @@ cursor = conn.cursor()
 
 
 cursor.execute("""
-    CREATE TABLE tb_escolaa(
+    CREATE TABLE tb_escola(
         id_escola INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
         nome VARCHAR(45) NOT NULL,
         FK_id_endereco INTEGER NOT NULL,
-        FK_id_campus INTEGER NOT NULL
+        FK_id_campus INTEGER NOT NULL,
+        FOREIGN KEY(fk_id_endereco) REFERENCES tb_endereco (idtb_endereco),
+        FOREIGN KEY(fk_id_campus) REFERENCES tb_campus (id_campus)
 
     );
 """)
@@ -24,7 +26,9 @@ cursor.execute("""
         cpf VARCHAR(11) NOT NULL,
         nascimento DATE NOT NULL,
         FK_id_endereco INTEGER NOT NULL,
-        FK_id_curso INTEGER NOT NULL
+        FK_id_curso INTEGER NOT NULL,
+        FOREIGN KEY(fk_id_endereco) REFERENCES tb_endereco (id_endereco),
+        FOREIGN KEY(fk_id_curso) REFERENCES tb_curso (id_curso)
     );
 """)
 
@@ -34,7 +38,8 @@ cursor.execute("""
     CREATE TABLE tb_curso(
         id_curso INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
         nome VARCHAR(45) NOT NULL,
-        FK_id_turno INTEGER NOT NULL
+        FK_id_turno INTEGER NOT NULL,
+        FOREIGN KEY(fk_id_turno) REFERENCES tb_turno (id_turno)
     );
 """)
 
@@ -45,7 +50,8 @@ cursor.execute("""
     CREATE TABLE tb_turma(
         id_turma INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
         nome VARCHAR(45) NOT NULL,
-        FK_id_curso INTEGER NOT NULL
+        FK_id_curso INTEGER NOT NULL,
+        FOREIGN KEY(fk_id_curso) REFERENCES tb_curso (id_curso)
     );
 """)
 
@@ -55,7 +61,8 @@ cursor.execute("""
     CREATE TABLE tb_disciplina(
         id_disciplina INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
         nome VARCHAR(45) NOT NULL,
-        FK_id_professor INTEGER NOT NULL
+        FK_id_professor INTEGER NOT NULL,
+        FOREIGN KEY(fk_id_professor) REFERENCES tb_professor (id_professor)
     );
 """)
 
@@ -87,8 +94,9 @@ cursor.execute("""
     CREATE TABLE tb_professor(
         id_professor INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
         nome VARCHAR(45) NOT NULL,
-        cidade VARCHAR(45) NOT NULL,
-        FK_id_endereco INT NOT NULL
+        FK_id_endereco INT NOT NULL,
+        FOREIGN KEY(fk_id_endereco) REFERENCES tb_endereco (id_endereco)
+
     );
 """)
 
@@ -105,6 +113,3 @@ cursor.execute("""
 print('Tabela tb_turno foi criada.')
 
 
-
-
-conn.close()
