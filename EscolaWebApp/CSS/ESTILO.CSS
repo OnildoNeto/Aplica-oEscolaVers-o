@@ -1,0 +1,8 @@
+body {
+    font-family: arial, verdana, sans-serif;
+}
+div.container {
+    border: 3px solid yellow;
+    margin: 0 auto;
+    widht: 700 px;
+}

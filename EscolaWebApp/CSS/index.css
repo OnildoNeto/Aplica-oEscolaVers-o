@@ -1,0 +1,49 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+
+.meu-container{
+  border: 1px solid gray;
+  width: 80%;
+  margin: 0 auto;
+  padding: 0;
+  min-height: 100vh;
+
+  /*flex*/
+  display: flex;
+  flex-direction: column;
+}
+
+header{
+  background-color: #1874CD;
+  text-align: center;
+
+}
+
+
+header img{
+  width: 22%;
+}
+
+main{
+  background-color: #B5B5B5;
+  flex-grow: 1;
+}
+
+body{
+  font-family: verdana, sans-serif;
+}
+
+footer{
+  background-color: #1874CD;
+}
+
+.content{
+  display: flex;
+  flex-direction: column;
+}
+
+.item{
+  margin: 3em;
+}
