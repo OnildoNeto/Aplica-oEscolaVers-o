@@ -148,8 +148,9 @@ def getProfessoresId(id):
         conn.close()
     except(sqlite3.Error):
         logger.error("Aconteceu um erro.")
-    return jsonify(professor)
     logger.info("Professor listado com sucesso.")
+    return jsonify(professor)
+    
 
 # cadastrar professor
 @app.route("/professor", methods = ["POST"])
@@ -177,8 +178,9 @@ def setProfessor():
     finally:
         if conn:
             conn.close()
-    return jsonify(professor)
     logger.info("Professor cadastrado com sucesso.")
+    return jsonify(professor)
+    
 
 # update professor
 @app.route("/professor/<int:id>", methods=['PUT'])
@@ -248,8 +250,9 @@ def getTurnos():
         conn.close()
     except(sqlite3.Error):
          logger.error("Aconteceu um erro.")
-    return jsonify(turnos)
     logger.info("Turnos listados com sucesso.")
+    return jsonify(turnos)
+    
 
 # listar turno pelo id
 @app.route("/turnos/<int:id>", methods = ["GET"])
@@ -270,8 +273,9 @@ def getTurnoID(id):
         conn.close()
     except(sqlite3.Error):
         logger.error("Aconteceu um erro.")
-    return jsonify(turno)
     logger.info("Turno listado com sucesso.")
+    return jsonify(turno)
+    
 
 # cadastrar turno
 @app.route("/turno", methods = ["POST"])
@@ -297,8 +301,8 @@ def setTurno():
     finally:
         if conn:
             conn.close()
-    return jsonify(turno)
     logger.info("Turno cadastrado com sucesso.")
+    return jsonify(turno)
 
 # update turno
 @app.route("/turno/<int:id>", methods=['PUT'])
